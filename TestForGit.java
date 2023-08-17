@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class TestForGit{
     public static void main(String args[]){
-        System.out.println("Việt Nam");
+        System.out.println("Hello World");
 
     Scanner scan= new Scanner(System.in);
 

@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main{
     public static void main(String args[]){
-        System.out.println("điều khiển");
+        System.out.println("Việt Nam");
 
     Scanner scan= new Scanner(System.in);
 

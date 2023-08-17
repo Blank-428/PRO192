@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main{
+public class TestForGit{
     public static void main(String args[]){
         System.out.println("Việt Nam");
 

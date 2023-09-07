@@ -22,8 +22,8 @@ public class Car {
         wheelStatus = "Stop";
         System.out.println("Stop the car using break");
     }
-
+   
     public String toString() {
-        return "No of wheels in car" + noOfWheels + "\n" + "status of the wheels" + wheelStatus;
+        return "No of wheels in car " + noOfWheels + "\n" + "Status of the wheels " + wheelStatus;
     
 }

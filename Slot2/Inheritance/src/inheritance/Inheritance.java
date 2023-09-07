@@ -16,7 +16,7 @@ public class Inheritance {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Honda honda = new Honda(25, 100, 0);
+        Honda honda = new Honda(true, "25", 100);
         System.out.println(honda.toString());
     }
     

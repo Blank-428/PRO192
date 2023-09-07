@@ -9,14 +9,16 @@ package inheritance;
  *
  * @author admin
  */
-public class Honda extends Car{
+public class Honda extends Car {
     
-    public Boolean alloyWheel;
+    private Boolean alloyWheel;
 
-    public Honda(String wheelStatus, int noOfWheels, Boolean alloyWheel) {
+    public Honda(Boolean alloyWheel, String wheelStatus, int noOfWheels) {
         super(wheelStatus, noOfWheels);
         this.alloyWheel = alloyWheel;
-    } 
+    }
+
+    
 
     public void setAlloyWheel(Boolean alloyWheel) {
         this.alloyWheel = alloyWheel;

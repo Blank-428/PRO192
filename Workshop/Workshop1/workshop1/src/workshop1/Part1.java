@@ -34,7 +34,7 @@ public class Part1 {
             }
         }
         System.out.println("Sum: " + sum);
-        float avg = (float) 3sum / (rows * cols);
+        float avg = (float) sum / (rows * cols);
         System.out.println("Average = " + avg);
     }
 }

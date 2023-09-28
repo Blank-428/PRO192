@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ques1;
+package Q1;
 
 import java.util.*;
 import java.io.*;

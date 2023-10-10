@@ -10,8 +10,8 @@ package Q2;
  * @author admin
  */
 public class Robot {
-    protected String label;
-    protected int type;
+    private String label;
+    private int type;
 
     public Robot() {
     }

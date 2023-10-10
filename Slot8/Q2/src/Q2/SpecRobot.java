@@ -26,10 +26,13 @@ public class SpecRobot extends Robot {
     }
     
     public void setData() {
-        super.setLabel(label.substring(0, 1) + this.step + label.substring(1, label.length()));
+        String SpecLabel = super.getLabel();
+        super.setLabel(SpecLabel.substring(0, 1) + this.step + SpecLabel.substring(1, SpecLabel.length()));
     }
     public int getValue() {
-        if (super.type < 3 && super.label.contains("A")) {
+        int SpecType = super.getType();
+        String SpecLabel = super.getLabel();
+        if (SpecType < 3 && SpecLabel.contains("A")) {
             return this.step;
         } 
         return this.step + 2;

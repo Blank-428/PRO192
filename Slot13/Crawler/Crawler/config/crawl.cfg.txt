@@ -1,0 +1,10 @@
+#url to crawl
+urls = https://blogtruyenmoi.com/
+same.domain = true
+output.type = file
+output.folder = D:/Fall 2023/PRO192/SourceCode/Slot13
+output.file = D:/Fall 2023/PRO192/SourceCode/Slot13/kenh14.txt
+max.item.check = 10
+id.containers = wrapper_container,body
+class.containers = container,content,pContent,main
+

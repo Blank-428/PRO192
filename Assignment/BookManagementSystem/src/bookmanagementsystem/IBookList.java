@@ -5,6 +5,8 @@
  */
 package bookmanagementsystem;
 
+import java.io.IOException;
+
 /**
  *
  * @author admin
@@ -17,5 +19,6 @@ public interface IBookList {
     public void findFirstMaxPrice();
     public void sortAscendinglyByCode();
     public void removeBookByCode();
-    public void loadDataFromFile(String fileName);
+    public void loadDataFromFile(String fileName) throws IOException;
+    public void saveDataToFile(String fileName) throws IOException;
 }

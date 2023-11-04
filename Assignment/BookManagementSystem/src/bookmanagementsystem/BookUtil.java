@@ -12,36 +12,6 @@ import java.util.*;
  * @author admin
  */
 public class BookUtil {
-    public static String autoGenerateCode(ArrayList<Book> bookList) {
-        int firstHalfStringLength = 3;
-        int secondHalfStringLength = 2;
-        String pivot = ".";
-        
-        String buffer = new String();
-
-        while (true) {
-            buffer = buffer.concat(addRandomCharToBuffer(firstHalfStringLength));
-            buffer = buffer.concat(pivot);
-            buffer = buffer.concat(addRandomCharToBuffer(secondHalfStringLength));
-
-            if (!BookUtil.isDuplicate(buffer,bookList)) {
-                return buffer;
-            }
-        }
-    }
-    
-    public static String addRandomCharToBuffer(int stringLength) {
-        int leftLimit = 48; // letter '0'
-        int rightLimit = 57; // letter '9'
-        Random random = new Random();
-        StringBuilder buffer = new StringBuilder(stringLength);
-        for (int i = 0; i < stringLength; i++) {
-                int randomLimitedInt = leftLimit + (int) 
-                    (random.nextFloat() * (rightLimit - leftLimit + 1));
-                    buffer.append((char) randomLimitedInt);
-                }
-        return buffer.toString();
-    }
 
     public static boolean isDuplicate(String xCode, ArrayList<Book> bookList) {
         if (bookList.isEmpty()) {
@@ -71,4 +41,13 @@ public class BookUtil {
         System.out.println("Not found");
         return null;
     }
+    
+    public static Book getBookFromLineInFile(String[] bookProperties) {
+        String xCode = bookProperties[0];
+        String xTitle = bookProperties[1];
+        int xQuantity = Integer.parseInt(bookProperties[2]);
+        double xPrice = Double.parseDouble(bookProperties[3]);      
+        return new Book(xCode, xTitle, xQuantity, xPrice);
+    }
+        
 }

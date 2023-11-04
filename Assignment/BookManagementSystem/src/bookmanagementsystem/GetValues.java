@@ -4,7 +4,7 @@
  */
 package bookmanagementsystem;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class GetValues {
     private static final Scanner sc = new Scanner(System.in);
@@ -25,6 +25,19 @@ public class GetValues {
             }
         }   while (true);
         return output;
+    }
+    
+    public static String getUniqueCode(ArrayList<Book> bookList) {
+        String pattern = "[0-9]{3}.[0-9]{1,3}";
+        String xCode;
+        while (true) {
+            System.out.println("Enter code (format 000.000)");
+            xCode = getStringValue();
+            boolean isValidCode = xCode.matches(pattern) && (!BookUtil.isDuplicate(xCode,bookList));
+            if (isValidCode) {
+                return xCode;
+            }
+        }
     }
     
     public static String getStringValue() {

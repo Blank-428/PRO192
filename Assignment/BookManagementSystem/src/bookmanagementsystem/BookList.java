@@ -5,6 +5,7 @@
  */
 package bookmanagementsystem;
 
+import java.io.*;
 import java.util.*;
 
 
@@ -30,7 +31,7 @@ public class BookList implements IBookList{
     }
     
     public Book getBookFromKeyBoard() {
-        String xCode = BookUtil.autoGenerateCode(bookList);
+        String xCode = GetValues.getUniqueCode(bookList);
         System.out.println("Title");
         String xTitle = GetValues.getStringValue();
         System.out.println("Quantity");
@@ -42,6 +43,10 @@ public class BookList implements IBookList{
    
     @Override
     public void displayBookList() {
+        if (bookList.isEmpty()) {
+            System.out.println("The book list is empty");
+            return;
+        }
         System.out.printf("%-15s%-15s%-15s%-15s\n", "Book Code", "Title", "Quantity", "Price");
         for (Book book : bookList) {
             book.showBook();
@@ -54,7 +59,7 @@ public class BookList implements IBookList{
         if (searchBook == null) {
             return;
         }
-        System.out.println("Founded");
+        System.out.println("Founded" + bookList.indexOf(searchBook));
         searchBook.showBook();
     }
 
@@ -64,7 +69,7 @@ public class BookList implements IBookList{
         if (updateBook == null) {
             return;
         }
-        System.out.println("Founded");
+        System.out.println("Founded" + bookList.indexOf(updateBook));
         updateBook.showBook();
         
         System.out.println("Enter the new book price");
@@ -74,7 +79,17 @@ public class BookList implements IBookList{
 
     @Override
     public void findFirstMaxPrice() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double maxPrice = Double.MIN_VALUE;
+        int indexMaxPrice = 0;
+        for (int i = 0; i < bookList.size(); i++) {
+            Book book = bookList.get(i);
+            if (maxPrice < book.getPrice()) {
+                maxPrice = book.getPrice();
+                indexMaxPrice = i;
+            }
+        }
+        System.out.println("Founded" + indexMaxPrice);
+        bookList.get(indexMaxPrice).showBook();
     }
 
     @Override
@@ -86,12 +101,88 @@ public class BookList implements IBookList{
 
     @Override
     public void removeBookByCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Book removeBook = BookUtil.findNeededBookByCode(bookList);
+        if (removeBook == null) {
+            return;
+        }
+        
+        System.out.println("Founded" + bookList.indexOf(removeBook));
+        removeBook.showBook();
+        
+        bookList.remove(removeBook);
     }
 
     @Override
-    public void loadDataFromFile(String fileName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void loadDataFromFile(String fileName) throws IOException {
+        
+        bookList.clear();
+        
+        BufferedReader bufferReader;
+        
+        try (FileReader fileReader = new FileReader(fileName)) {
+            bufferReader = new BufferedReader(fileReader);
+            String oneLineInFile;
+            String separator = ",";
+            int numberOfProperties = 4;
+            String[] bookProperties;
+            
+            while ((oneLineInFile = bufferReader.readLine()) != null) {
+                bookProperties = oneLineInFile.split(separator);
+                
+                if (bookProperties.length != numberOfProperties) {
+                    continue;
+                }
+                
+                cleanUnwantedSpace(bookProperties);
+                
+                Book newBook = BookUtil.getBookFromLineInFile(bookProperties);
+                bookList.add(newBook);
+            }
+        }
+        bufferReader.close();   
+    }    
+    
+    public void cleanUnwantedSpace(String[] bookProperties) {
+        for (String bookProperty : bookProperties) {
+            bookProperty = bookProperty.trim();
+        }
     }
     
+    @Override
+    public void saveDataToFile(String fileName) throws IOException {
+        
+        if (!GetPermissionToWriteToFile()) {
+            return;
+        }
+        
+        PrintWriter printWriter;
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            printWriter = new PrintWriter(fileWriter);
+            for (Book book: bookList) {
+                printWriter.println(book.toString());
+            }
+        }
+        printWriter.close();
+    }
+    
+    public boolean GetPermissionToWriteToFile() {
+        String accept = "y";
+        String reject = "n";
+        String permission;
+        System.out.println("");
+        while (true) {
+            try {
+                permission = GetValues.getStringValue();
+                if (permission.equalsIgnoreCase(accept)) {
+                    return true;
+                }
+                if (permission.equalsIgnoreCase(reject)) {
+                    return false;
+                }      
+                throw new Exception();
+            } catch (Exception e) {
+                System.out.println("Input again");
+            }
+        }
+    }
 }

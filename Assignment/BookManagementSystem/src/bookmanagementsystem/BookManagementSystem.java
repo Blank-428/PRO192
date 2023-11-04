@@ -5,6 +5,8 @@
  */
 package bookmanagementsystem;
 
+import java.io.IOException;
+
 
 /**
  *
@@ -15,7 +17,7 @@ public class BookManagementSystem {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         String fileName = "book.txt";
         BookList bookList = new BookList();
@@ -74,7 +76,7 @@ public class BookManagementSystem {
                     break;
                 }
             } 
-        }  
+        } 
+        bookList.saveDataToFile(fileName);
     }
-    
 }

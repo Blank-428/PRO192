@@ -15,7 +15,7 @@ public class GetValues {
         do {
             try {
                 output = Integer.parseInt(sc.nextLine());
-                if ((0 < output) && (output <= Integer.MAX_VALUE)) {
+                if ((0 <= output) && (output <= Integer.MAX_VALUE)) {
                    break;
                 } else {
                     throw new NumberFormatException();
@@ -49,7 +49,7 @@ public class GetValues {
         do {
             try {
                 output = Double.parseDouble(sc.nextLine());
-                if ((0 < output) && (output <= Double.MAX_VALUE)) {
+                if ((0 <= output) && (output <= Double.MAX_VALUE)) {
                    break;
                 } else {
                     throw new NumberFormatException();

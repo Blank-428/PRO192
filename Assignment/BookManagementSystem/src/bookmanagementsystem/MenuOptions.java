@@ -5,8 +5,6 @@
  */
 package bookmanagementsystem;
 
-import java.util.*;
-
 /**
  *
  * @author admin
@@ -66,6 +64,12 @@ public enum MenuOptions {
         public void showStatus() {
             System.out.println("Exit the program");
         }
+    },
+    INVALID_OPTION(-1,"Invalid option") {
+        @Override
+        public void showStatus() {
+            System.out.println("Invalid option. Input again.");
+        }
     };
     
     private final int value;
@@ -77,24 +81,18 @@ public enum MenuOptions {
     }
     
     public static MenuOptions getOptionByValue(int value) {
-        try {
-            for (MenuOptions option: MenuOptions.values()) {
-                if (option.value == value) {
-                    return option;
-                }
+        for (MenuOptions option: MenuOptions.values()) {
+             if (option.value == value) {
+                 return option;
             }
-            throw new Exception();
-        } catch (Exception c) {
-            System.out.println("Not found");
-        } 
-        return null;
+        }
+        return INVALID_OPTION;
     }
 
     public int getValue() {
         return value;
-        
     }
-    
+
     public String getLabel() {
         return label;
     }

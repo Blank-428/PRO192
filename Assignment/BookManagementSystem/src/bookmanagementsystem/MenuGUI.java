@@ -11,7 +11,9 @@ package bookmanagementsystem;
 public class MenuGUI {
     public static int getChoiceFromKeyBoard() {
         for (MenuOptions option : MenuOptions.values()) {
-            System.out.println(option.toString());
+            if (option != MenuOptions.INVALID_OPTION) {
+                System.out.println(option.toString());
+            }
         }
         return GetValues.getIntValue();
     }

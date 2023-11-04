@@ -7,6 +7,7 @@ package bookmanagementsystem;
 
 import java.util.*;
 
+
 /**
  *
  * @author admin
@@ -14,24 +15,61 @@ import java.util.*;
 public class BookList implements IBookList{
     private ArrayList<Book> bookList;
 
-    @Override
-    public void addBookToList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public BookList() {
+        bookList = new ArrayList<>();
+    }
+
+    public BookList(ArrayList<Book> bookList) {
+        this.bookList = bookList;
     }
 
     @Override
+    public void addBookToList() {
+        Book newBook = getBookFromKeyBoard();
+        bookList.add(newBook);
+    }
+    
+    public Book getBookFromKeyBoard() {
+        String xCode = BookUtil.autoGenerateCode(bookList);
+        System.out.println("Title");
+        String xTitle = GetValues.getStringValue();
+        System.out.println("Quantity");
+        int xQuantity = GetValues.getIntValue();
+        System.out.println("Price");
+        double xPrice = GetValues.getDoubleValue();
+        return new Book(xCode,xTitle,xQuantity,xPrice);
+    }
+   
+    @Override
     public void displayBookList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.printf("%-15s%-15s%-15s%-15s\n", "Book Code", "Title", "Quantity", "Price");
+        for (Book book : bookList) {
+            book.showBook();
+        }
     }
 
     @Override
     public void searchBookByCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Book searchBook = BookUtil.findNeededBookByCode(bookList);
+        if (searchBook == null) {
+            return;
+        }
+        System.out.println("Founded");
+        searchBook.showBook();
     }
 
     @Override
     public void updatePriceByCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Book updateBook = BookUtil.findNeededBookByCode(bookList);
+        if (updateBook == null) {
+            return;
+        }
+        System.out.println("Founded");
+        updateBook.showBook();
+        
+        System.out.println("Enter the new book price");
+        double newPrice = GetValues.getDoubleValue();
+        updateBook.setPrice(newPrice);
     }
 
     @Override
@@ -41,7 +79,9 @@ public class BookList implements IBookList{
 
     @Override
     public void sortAscendinglyByCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Collections.sort(bookList, (Book o1, Book o2) -> {
+            return o1.getCode().compareTo(o1.getCode());
+        });
     }
 
     @Override

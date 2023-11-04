@@ -54,10 +54,8 @@ public class Book {
     public void setPrice(double price) {
         this.price = price;
     }
-
-    @Override
-    public String toString() {
-        return code + "%-15" + title + "%-15" + quantity + "%-15s" + price;
-    }
     
+    public void showBook() {
+        System.out.printf("%-15s%-15s%-15d%-15.2f\n",code,title,quantity,price);
+    }
 }

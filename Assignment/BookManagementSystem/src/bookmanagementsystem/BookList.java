@@ -14,7 +14,7 @@ import java.util.*;
  * @author admin
  */
 public class BookList implements IBookList{
-    private ArrayList<Book> bookList;
+    private final ArrayList<Book> bookList;
 
     public BookList() {
         bookList = new ArrayList<>();
@@ -26,21 +26,17 @@ public class BookList implements IBookList{
 
     @Override
     public void addBookToList() {
-        Book newBook = getBookFromKeyBoard();
-        bookList.add(newBook);
+        String messageAddBookToList = "Add more books (y/n): ";
+        boolean running = true;
+        while (running) {
+            Book newBook = BookUtil.getBookFromKeyBoard(bookList);
+            bookList.add(newBook);
+            if (!BookUtil.GetPermissionToContinue(messageAddBookToList)) {
+                running = false;
+            }
+        }
     }
-    
-    public Book getBookFromKeyBoard() {
-        String xCode = GetValues.getUniqueCode(bookList);
-        System.out.println("Title");
-        String xTitle = GetValues.getStringValue();
-        System.out.println("Quantity");
-        int xQuantity = GetValues.getIntValue();
-        System.out.println("Price");
-        double xPrice = GetValues.getDoubleValue();
-        return new Book(xCode,xTitle,xQuantity,xPrice);
-    }
-   
+
     @Override
     public void displayBookList() {
         if (bookList.isEmpty()) {
@@ -59,7 +55,7 @@ public class BookList implements IBookList{
         if (searchBook == null) {
             return;
         }
-        System.out.println("Founded" + bookList.indexOf(searchBook));
+        System.out.println("Found at the position " + bookList.indexOf(searchBook));
         searchBook.showBook();
     }
 
@@ -69,33 +65,32 @@ public class BookList implements IBookList{
         if (updateBook == null) {
             return;
         }
-        System.out.println("Founded" + bookList.indexOf(updateBook));
+        System.out.println("Found at the position " + bookList.indexOf(updateBook));
         updateBook.showBook();
         
-        System.out.println("Enter the new book price");
-        double newPrice = GetValues.getDoubleValue();
+        String messageGetNewPrice = "Enter new price: ";
+        double newPrice = GetValues.getDoubleValue(messageGetNewPrice);
         updateBook.setPrice(newPrice);
     }
 
     @Override
     public void findFirstMaxPrice() {
+        Book maxPriceBook = new Book();
         double maxPrice = Double.MIN_VALUE;
-        int indexMaxPrice = 0;
-        for (int i = 0; i < bookList.size(); i++) {
-            Book book = bookList.get(i);
+        for (Book book : bookList) {
             if (maxPrice < book.getPrice()) {
                 maxPrice = book.getPrice();
-                indexMaxPrice = i;
+                maxPriceBook = book;
             }
         }
-        System.out.println("Founded" + indexMaxPrice);
-        bookList.get(indexMaxPrice).showBook();
+        System.out.println("Found at the position " + bookList.indexOf(maxPriceBook));
+        maxPriceBook.showBook();
     }
 
     @Override
     public void sortAscendinglyByCode() {
         Collections.sort(bookList, (Book o1, Book o2) -> {
-            return o1.getCode().compareTo(o1.getCode());
+            return o1.getCode().compareTo(o2.getCode());
         });
     }
 
@@ -105,36 +100,28 @@ public class BookList implements IBookList{
         if (removeBook == null) {
             return;
         }
-        
-        System.out.println("Founded" + bookList.indexOf(removeBook));
+        System.out.println("Found at the position " + bookList.indexOf(removeBook));
         removeBook.showBook();
-        
         bookList.remove(removeBook);
     }
 
     @Override
     public void loadDataFromFile(String fileName) throws IOException {
-        
-        bookList.clear();
+        bookList.clear(); //because a request is override the current list
         
         BufferedReader bufferReader;
-        
         try (FileReader fileReader = new FileReader(fileName)) {
             bufferReader = new BufferedReader(fileReader);
             String oneLineInFile;
             String separator = ",";
             int numberOfProperties = 4;
             String[] bookProperties;
-            
             while ((oneLineInFile = bufferReader.readLine()) != null) {
                 bookProperties = oneLineInFile.split(separator);
-                
                 if (bookProperties.length != numberOfProperties) {
                     continue;
                 }
-                
-                cleanUnwantedSpace(bookProperties);
-                
+                BookUtil.cleanUnwantedSpace(bookProperties);
                 Book newBook = BookUtil.getBookFromLineInFile(bookProperties);
                 bookList.add(newBook);
             }
@@ -142,19 +129,12 @@ public class BookList implements IBookList{
         bufferReader.close();   
     }    
     
-    public void cleanUnwantedSpace(String[] bookProperties) {
-        for (String bookProperty : bookProperties) {
-            bookProperty = bookProperty.trim();
-        }
-    }
-    
     @Override
     public void saveDataToFile(String fileName) throws IOException {
-        
-        if (!GetPermissionToWriteToFile()) {
+        String messageSaveDataToFile = "Overwrite to file book.txt (y/n): ";
+        if (!BookUtil.GetPermissionToContinue(messageSaveDataToFile)) {
             return;
         }
-        
         PrintWriter printWriter;
         try (FileWriter fileWriter = new FileWriter(fileName)) {
             printWriter = new PrintWriter(fileWriter);
@@ -165,24 +145,4 @@ public class BookList implements IBookList{
         printWriter.close();
     }
     
-    public boolean GetPermissionToWriteToFile() {
-        String accept = "y";
-        String reject = "n";
-        String permission;
-        System.out.println("");
-        while (true) {
-            try {
-                permission = GetValues.getStringValue();
-                if (permission.equalsIgnoreCase(accept)) {
-                    return true;
-                }
-                if (permission.equalsIgnoreCase(reject)) {
-                    return false;
-                }      
-                throw new Exception();
-            } catch (Exception e) {
-                System.out.println("Input again");
-            }
-        }
-    }
 }

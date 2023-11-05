@@ -15,6 +15,7 @@ public class MenuGUI {
                 System.out.println(option.toString());
             }
         }
-        return GetValues.getIntValue();
+        String messageGetChoice = "   Your selection (0 -> 8): ";
+        return GetValues.getIntValue(messageGetChoice);
     }
 }

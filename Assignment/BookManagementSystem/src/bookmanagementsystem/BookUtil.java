@@ -12,6 +12,22 @@ import java.util.*;
  * @author admin
  */
 public class BookUtil {
+    
+    public static Book getBookFromKeyBoard(ArrayList<Book> bookList) {
+        String messageGetCode = "Enter code (format 000.000): ";
+        String xCode = GetValues.getUniqueCode(messageGetCode,bookList);
+        
+        String messageGetTitle = "Enter title: ";
+        String xTitle = GetValues.getStringValue(messageGetTitle);
+        
+        String messageGetQuantity = "Enter quantity: ";
+        int xQuantity = GetValues.getIntValue(messageGetQuantity);
+        
+        String messageGetPrice = "Enter price: ";
+        double xPrice = GetValues.getDoubleValue(messageGetPrice);
+        
+        return new Book(xCode,xTitle,xQuantity,xPrice);
+    }
 
     public static boolean isDuplicate(String xCode, ArrayList<Book> bookList) {
         if (bookList.isEmpty()) {
@@ -20,7 +36,6 @@ public class BookUtil {
         for (Book book : bookList) {
             if (book.getCode().equals(xCode)) {
                 return true;
-            } else {
             }
         }
         return false;
@@ -31,8 +46,10 @@ public class BookUtil {
             System.out.println("The book list is empty");
             return null;
         }
-        System.out.println("Enter the book code to find");
-        String findCode = GetValues.getStringValue();
+        
+        String messageGetFindCode = "Enter code (format 000.000): ";
+        String findCode = GetValues.getCodeFromKeyBoard(messageGetFindCode);
+        
         for (Book book : bookList) {
             if (book.getCode().equalsIgnoreCase(findCode)) {
                 return book;
@@ -50,4 +67,26 @@ public class BookUtil {
         return new Book(xCode, xTitle, xQuantity, xPrice);
     }
         
+        
+    public static void cleanUnwantedSpace(String[] bookProperties) {
+        for (String bookProperty : bookProperties) {
+            bookProperty = bookProperty.trim();
+        }
+    }
+    
+    public static boolean GetPermissionToContinue(String message) {
+        String accept = "y";
+        String reject = "n";
+        String permission;
+        while (true) {
+            permission = GetValues.getStringValue(message);
+            if (permission.equalsIgnoreCase(accept)) {
+                return true;
+            }
+            if (permission.equalsIgnoreCase(reject)) {
+                return false;
+            }
+            System.out.println("Invalid option");
+        }
+    }
 }

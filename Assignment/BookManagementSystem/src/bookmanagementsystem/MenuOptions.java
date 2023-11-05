@@ -68,7 +68,7 @@ public enum MenuOptions {
     INVALID_OPTION(-1,"Invalid option") {
         @Override
         public void showStatus() {
-            System.out.println("Invalid option. Input again.");
+            System.out.println("Wrong selection!");
         }
     };
     
@@ -102,6 +102,5 @@ public enum MenuOptions {
         return value + ". " + label;
     }
     
-    public void showStatus() {
-    };
+    public abstract void showStatus();
 }

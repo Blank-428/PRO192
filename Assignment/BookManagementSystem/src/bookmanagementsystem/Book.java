@@ -16,6 +16,9 @@ public class Book {
     private int quantity;
     private double price;
 
+    public Book() {
+    }
+
     public Book(String code, String title, int quantity, double price) {
         this.code = code;
         this.title = title;
@@ -59,8 +62,6 @@ public class Book {
     public String toString() {
         return code + "," + title + "," + quantity + "," + price;
     }
-    
-    
     
     public void showBook() {
         System.out.printf("%-15s%-15s%-15d%-15.2f\n",code,title,quantity,price);

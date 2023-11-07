@@ -63,6 +63,9 @@ public class BookManagementSystem {
                     break;
                 }
                 case LOAD_DATA_FROM_FILE: {
+                    fileName = GetValues.getStringValue("Enter file name (b = book.txt): ");
+                    if(fileName.trim().equalsIgnoreCase("b")) 
+                        fileName = "book.txt";
                     bookList.loadDataFromFile(fileName);
                     option.showStatus();
                     break;

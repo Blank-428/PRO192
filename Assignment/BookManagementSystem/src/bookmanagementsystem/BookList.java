@@ -107,9 +107,9 @@ public class BookList implements IBookList{
 
     @Override
     public void loadDataFromFile(String fileName) throws IOException {
-        bookList.clear(); //because a request is override the current list
+        bookList.clear(); //because a request is overwrite the current list
         
-        BufferedReader bufferReader;
+        BufferedReader bufferReader = null;
         try (FileReader fileReader = new FileReader(fileName)) {
             bufferReader = new BufferedReader(fileReader);
             String oneLineInFile;
@@ -128,8 +128,14 @@ public class BookList implements IBookList{
                 Book newBook = BookUtil.getBookFromLineInFile(bookProperties);
                 bookList.add(newBook);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } finally {
+            if (bufferReader == null) {
+                return;
+            }
+            bufferReader.close();
         }
-        bufferReader.close();   
     }    
     
     @Override
@@ -138,14 +144,20 @@ public class BookList implements IBookList{
         if (!BookUtil.GetPermissionToContinue(messageSaveDataToFile)) {
             return;
         }
-        PrintWriter printWriter;
+        PrintWriter printWriter = null;
         try (FileWriter fileWriter = new FileWriter(fileName)) {
             printWriter = new PrintWriter(fileWriter);
-            bookList.forEach((book) -> {
+            for (Book book : bookList) {
                 printWriter.println(book.toString());
-            });
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } finally {
+            if (printWriter == null) {
+                return;
+            }
+            printWriter.close();
         }
-        printWriter.close();
     }
     
 }

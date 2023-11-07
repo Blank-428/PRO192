@@ -60,7 +60,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return code + "," + title + "," + quantity + "," + price;
+        return code + "|" + title + "|" + quantity + "|" + price;
     }
     
     public void showBook() {

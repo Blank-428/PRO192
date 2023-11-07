@@ -109,18 +109,17 @@ public class BookList implements IBookList{
     public void loadDataFromFile(String fileName) throws IOException {
         bookList.clear(); //because a request is overwrite the current list
         
-        BufferedReader bufferReader = null;
+        BufferedReader bufferReader;
         try (FileReader fileReader = new FileReader(fileName)) {
             bufferReader = new BufferedReader(fileReader);
             String oneLineInFile;
-            String separator = "|";
+            String separator = "\\|";
             int line = 0;
             String[] bookProperties;
             while ((oneLineInFile = bufferReader.readLine()) != null) {
                 line++;
                 bookProperties = oneLineInFile.split(separator);
                 BookUtil.clearUnwantedSpace(bookProperties);
-                
                 if (!BookUtil.checkBookProperties(bookProperties, bookList)) {
                     System.out.println("Line " + line + " caught an error.");
                     continue;
@@ -128,14 +127,8 @@ public class BookList implements IBookList{
                 Book newBook = BookUtil.getBookFromLineInFile(bookProperties);
                 bookList.add(newBook);
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } finally {
-            if (bufferReader == null) {
-                return;
-            }
-            bufferReader.close();
         }
+        bufferReader.close();
     }    
     
     @Override

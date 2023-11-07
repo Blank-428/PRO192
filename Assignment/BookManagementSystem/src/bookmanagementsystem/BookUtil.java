@@ -18,7 +18,7 @@ public class BookUtil {
         int numberOfProperties = 4;
         if (bookProperties.length != numberOfProperties) {
             System.out.println("Not enough book properties");
-            check = false;
+            return false;
         }
         if (!isValidCode(bookProperties[0], bookList)) {
             System.out.println("Book code is not valid");

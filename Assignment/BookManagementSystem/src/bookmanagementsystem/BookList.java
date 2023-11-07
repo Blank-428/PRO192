@@ -113,7 +113,7 @@ public class BookList implements IBookList{
         try (FileReader fileReader = new FileReader(fileName)) {
             bufferReader = new BufferedReader(fileReader);
             String oneLineInFile;
-            String separator = ",";
+            String separator = "|";
             int line = 0;
             String[] bookProperties;
             while ((oneLineInFile = bufferReader.readLine()) != null) {

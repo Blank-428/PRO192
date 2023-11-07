@@ -64,6 +64,6 @@ public class Book {
     }
     
     public void showBook() {
-        System.out.printf("%-15s%-15s%-15d%-15.2f\n",code,title,quantity,price);
+        System.out.printf("%-15s%-25s%-15d%-15.2f\n",code,title,quantity,price);
     }
 }

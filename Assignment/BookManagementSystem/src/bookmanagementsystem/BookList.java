@@ -43,7 +43,7 @@ public class BookList implements IBookList{
             System.out.println("The book list is empty");
             return;
         }
-        System.out.printf("%-15s%-15s%-15s%-15s\n", "Book Code", "Title", "Quantity", "Price");
+        System.out.printf("%-15s%-25s%-15s%-15s\n", "Book Code", "Title", "Quantity", "Price");
         bookList.forEach((book) -> {
             book.showBook();
         });

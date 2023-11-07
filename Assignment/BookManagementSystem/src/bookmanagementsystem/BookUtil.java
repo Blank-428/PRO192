@@ -40,7 +40,7 @@ public class BookUtil {
     } 
     
     public static boolean isValidCode(String code, ArrayList<Book> bookList) {
-        String pattern = "[0-9]{3}.[0-9]{1,3}";
+        String pattern = "[0-9]{3}\\.[0-9]{1,3}";
         if (!code.matches(pattern)) {
             return false;
         }

@@ -38,7 +38,7 @@ public class GetValues {
     }
     
     public static String getCodeFromKeyBoard(String message) {
-        String pattern = "[0-9]{3}.[0-9]{1,3}";
+        String pattern = "[0-9]{3}\\.[0-9]{1,3}";
         String xCode;
         while (true) {
             xCode = getStringValue(message);

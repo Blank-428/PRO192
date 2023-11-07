@@ -55,7 +55,7 @@ public class GetValues {
         while (true) {
             System.out.print(message);
             try {
-                String output = SC.nextLine();
+                String output = SC.nextLine().trim().replaceAll("\\s+"," ");
                 if (!output.isEmpty()) {
                     return output;
                 }
@@ -81,5 +81,4 @@ public class GetValues {
             }
         }
     }
-    
 }

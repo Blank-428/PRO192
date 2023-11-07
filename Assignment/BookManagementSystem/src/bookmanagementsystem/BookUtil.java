@@ -12,6 +12,70 @@ import java.util.*;
  * @author admin
  */
 public class BookUtil {
+    //use static keyword for using method via file name
+    public static boolean checkBookProperties(String[] bookProperties, ArrayList<Book> bookList) {
+        boolean check = true;
+        int numberOfProperties = 4;
+        if (bookProperties.length != numberOfProperties) {
+            System.out.println("Not enough book properties");
+            check = false;
+        }
+        if (!isValidCode(bookProperties[0], bookList)) {
+            System.out.println("Book code is not valid");
+            check = false;
+        }
+        if (!isValidTitle(bookProperties[1])) {
+            System.out.println("Book title is not valid");
+            check = false;
+        }
+        if (!isValidQuantity(bookProperties[2])) {
+            System.out.println("Book quantity is not valid");
+            check = false;
+        }
+        if (!isValidPrice(bookProperties[3])) {
+            System.out.println("Book price is not valid");
+            check = false;
+        }
+        return check;
+    } 
+    
+    public static boolean isValidCode(String code, ArrayList<Book> bookList) {
+        String pattern = "[0-9]{3}.[0-9]{1,3}";
+        if (!code.matches(pattern)) {
+            return false;
+        }
+        return !BookUtil.isDuplicate(code, bookList);
+    }
+    
+    public static boolean isValidTitle(String Title) {
+        return !Title.isEmpty();
+    }
+    
+    public static boolean isValidQuantity(String quantity) {
+        try {
+                int output = Integer.parseInt(quantity);
+                boolean isValidValue = (0 <= output) && (output <= Integer.MAX_VALUE);
+                if (!isValidValue) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        return true;
+    }
+    
+    public static boolean isValidPrice(String price) {
+        try {
+                double output = Double.parseDouble(price);
+                boolean isValidValue = (0 <= output) && (output <= Double.MAX_VALUE);
+                if (!isValidValue) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        return true;
+    }
     
     public static Book getBookFromKeyBoard(ArrayList<Book> bookList) {
         String messageGetCode = "Enter code (format 000.000): ";
@@ -33,12 +97,7 @@ public class BookUtil {
         if (bookList.isEmpty()) {
             return false;
         }
-        for (Book book : bookList) {
-            if (book.getCode().equals(xCode)) {
-                return true;
-            }
-        }
-        return false;
+        return bookList.stream().anyMatch((book) -> (book.getCode().equals(xCode)));
     }
     
     public static Book findNeededBookByCode(ArrayList<Book> bookList) {
@@ -47,15 +106,22 @@ public class BookUtil {
             return null;
         }
         
-        String messageGetFindCode = "Enter code (format 000.000): ";
-        String findCode = GetValues.getCodeFromKeyBoard(messageGetFindCode);
+        String messageFindNeededBookByCode = "Find book again (y/n): ";
+        boolean running = true;
+        while (running) {
+            String messageGetFindCode = "Enter code (format 000.000): ";
+            String findCode = GetValues.getCodeFromKeyBoard(messageGetFindCode);
         
-        for (Book book : bookList) {
-            if (book.getCode().equalsIgnoreCase(findCode)) {
-                return book;
+            for (Book book : bookList) {
+                if (book.getCode().equalsIgnoreCase(findCode)) {
+                    return book;
+                }
+            }
+            System.out.println("Not found");
+            if (!GetPermissionToContinue(messageFindNeededBookByCode)) {
+                running = false;
             }
         }
-        System.out.println("Not found");
         return null;
     }
     
@@ -68,9 +134,9 @@ public class BookUtil {
     }
         
         
-    public static void cleanUnwantedSpace(String[] bookProperties) {
-        for (String bookProperty : bookProperties) {
-            bookProperty = bookProperty.trim();
+    public static void clearUnwantedSpace(String[] bookProperties) {
+        for (int i = 0; i < bookProperties.length; i++) {
+            bookProperties[i] = bookProperties[i].trim().replaceAll("\\s+"," ");
         }
     }
     

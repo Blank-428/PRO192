@@ -44,9 +44,9 @@ public class BookList implements IBookList{
             return;
         }
         System.out.printf("%-15s%-15s%-15s%-15s\n", "Book Code", "Title", "Quantity", "Price");
-        for (Book book : bookList) {
+        bookList.forEach((book) -> {
             book.showBook();
-        }
+        });
     }
 
     @Override
@@ -114,14 +114,17 @@ public class BookList implements IBookList{
             bufferReader = new BufferedReader(fileReader);
             String oneLineInFile;
             String separator = ",";
-            int numberOfProperties = 4;
+            int line = 0;
             String[] bookProperties;
             while ((oneLineInFile = bufferReader.readLine()) != null) {
+                line++;
                 bookProperties = oneLineInFile.split(separator);
-                if (bookProperties.length != numberOfProperties) {
+                BookUtil.clearUnwantedSpace(bookProperties);
+                
+                if (!BookUtil.checkBookProperties(bookProperties, bookList)) {
+                    System.out.println("Line " + line + " caught an error.");
                     continue;
                 }
-                BookUtil.cleanUnwantedSpace(bookProperties);
                 Book newBook = BookUtil.getBookFromLineInFile(bookProperties);
                 bookList.add(newBook);
             }
@@ -138,9 +141,9 @@ public class BookList implements IBookList{
         PrintWriter printWriter;
         try (FileWriter fileWriter = new FileWriter(fileName)) {
             printWriter = new PrintWriter(fileWriter);
-            for (Book book: bookList) {
+            bookList.forEach((book) -> {
                 printWriter.println(book.toString());
-            }
+            });
         }
         printWriter.close();
     }

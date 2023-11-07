@@ -52,5 +52,4 @@ public class MyString implements IString {
         }
         return result;
     }
-
 }

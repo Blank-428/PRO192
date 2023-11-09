@@ -35,21 +35,13 @@ public class BookList implements IBookList{
         while (running) {
             Book newBook = BookUtil.getBookFromKeyBoard(bookList);
             bookList.add(newBook);
-            addBookToEndOfFile("book.txt", newBook);
+            BookUtil.addBookToEndOfFile("book.txt", newBook);
             if (!BookUtil.GetPermissionToContinue(messageAddBookToList)) {
                 running = false;
             }
         }
     }
-    
-    public void addBookToEndOfFile(String fileName, Book newBook) throws IOException{
-        try {
-        String contentToAppend = newBook.toString();
-        Files.write(Paths.get(fileName), contentToAppend.getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            System.out.println("File Error");
-        }
-    }
+
 
     @Override
     public void displayBookList() {

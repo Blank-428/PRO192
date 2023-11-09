@@ -5,6 +5,10 @@
  */
 package bookmanagementsystem;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 /**
@@ -13,6 +17,15 @@ import java.util.*;
  */
 public class BookUtil {
     //use static keyword for using method via file name
+        
+    public static void addBookToEndOfFile(String fileName, Book newBook) throws IOException{
+        try {
+        String contentToAppend = newBook.toString() + "\r\n";
+        Files.write(Paths.get(fileName), contentToAppend.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("File Error");
+        }
+    }
     public static boolean checkBookProperties(String[] bookProperties, ArrayList<Book> bookList) {
         boolean check = true;
         int numberOfProperties = 4;

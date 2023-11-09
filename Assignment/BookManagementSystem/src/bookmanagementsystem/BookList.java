@@ -6,6 +6,10 @@
 package bookmanagementsystem;
 
 import java.io.*;
+import java.nio.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 
@@ -25,15 +29,25 @@ public class BookList implements IBookList{
     }
 
     @Override
-    public void addBookToList() {
+    public void addBookToList() throws IOException {
         String messageAddBookToList = "Add more books (y/n): ";
         boolean running = true;
         while (running) {
             Book newBook = BookUtil.getBookFromKeyBoard(bookList);
             bookList.add(newBook);
+            addBookToEndOfFile("book.txt", newBook);
             if (!BookUtil.GetPermissionToContinue(messageAddBookToList)) {
                 running = false;
             }
+        }
+    }
+    
+    public void addBookToEndOfFile(String fileName, Book newBook) throws IOException{
+        try {
+        String contentToAppend = newBook.toString();
+        Files.write(Paths.get(fileName), contentToAppend.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("File Error");
         }
     }
 

@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author admin
  */
 public interface IBookList {
-    public void addBookToList();
+    public void addBookToList() throws IOException;
     public void displayBookList();
     public void searchBookByCode();
     public void updatePriceByCode();

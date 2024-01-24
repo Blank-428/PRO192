@@ -3,28 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bookmanagementsystem;
+package View;
 
+import Controller.BookList;
+import Util.GetValues;
 import java.io.IOException;
-
 
 /**
  *
  * @author admin
  */
-public class BookManagementSystem {
-
-    /**
-     * @param args the command line arguments
-     * @throws java.io.IOException
-     */
-    public static void main(String[] args) throws IOException {
-        // TODO code application logic here
+public class MenuGUI {
+    
+    public static void showMenuGUI() throws IOException {
         String fileName = "book.txt";
         BookList bookList = new BookList();
         boolean running = true;
+        
         while (running) {
-            int choice = MenuGUI.getChoiceFromKeyBoard();
+            showMenuOption();
+            int choice = getChoiceFromKeyBoard();
+            
             MenuOptions option = MenuOptions.getOptionByValue(choice);
             switch (option) {
                 case ADD_BOOK_TO_LIST: {
@@ -83,4 +82,18 @@ public class BookManagementSystem {
         } 
         bookList.saveDataToFile(fileName);
     }
+    
+    public static void showMenuOption() {
+        for (MenuOptions option : MenuOptions.values()) {
+            if (option != MenuOptions.INVALID_OPTION) {
+                System.out.println(option.toString());
+            }
+        }    
+    }
+
+    public static int getChoiceFromKeyBoard() {
+        String messageGetChoice = "   Your selection (0 -> 8): ";
+        return GetValues.getIntValue(messageGetChoice);
+    }
+
 }
